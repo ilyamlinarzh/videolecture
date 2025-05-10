@@ -1,0 +1,217 @@
+
+# Flask Application "Video Lecture"
+
+
+## Установка
+___
+
+## Кратко
+- Установите Flask-приложение
+- Создайте виртуальное окружение для Flask-приложения и TTS (Python 3.11)
+- Установите необходимые пакеты для приложения
+- Установите SadTalker
+- Создайте отдельное виртуальное окружение для SadTalker (Python 3.8)
+- Установите необходимые пакеты для SadTalker
+- Настройте конфиг приложения
+
+___
+
+## Подробно
+
+### 1. Клонируйте репозиторий с GitHub:
+
+  ```bash
+  git clone https://github.com/your-username/video-lecture.git
+   ```
+
+### 2. Создайте виртуальное окружение
+
+Оно будет использоваться для Flask-приложения и xtts модели. 
+
+*Следующие инструкции сгенерированы СhatGPT:*
+
+
+**Windows:**
+
+Убедитесь, что установлен Python 3.11. Затем выполните в командной строке:
+
+```bash
+py -3.11 -m venv venv
+venv\Scripts\activate
+```
+
+**macOS / Linux:**
+
+Убедитесь, что Python 3.11 установлен и доступен как `python3.11`. Затем:
+
+```bash
+python3.11 -m venv venv
+source venv/bin/activate
+```
+
+Вот продолжение с инструкцией для установки пакетов из `requirements.txt`:
+
+### 3. Установите необходимые пакеты для приложения:
+
+В активированном виртуальном окружении установите все нужные модули:
+
+```bash
+pip install -r app_requirements.txt
+```
+
+Далее выйдите из этого виртуального окружения:
+
+```bash
+deactivate
+```
+
+### 4. Установите SadTalker:
+
+Для установки SadTalker, может быть полезным изучить официальный репозиторий: [SadTalker на GitHub](https://github.com/OpenTalker/SadTalker).
+
+Клонируйте его так, чтобы папка src была на одном уровне с папкой SadTalker:
+
+```bash
+git clone https://github.com/OpenTalker/SadTalker.git
+```
+
+Перейдем в неё:
+```bash
+cd SadTalker
+```
+
+### 5. Создайте виртуальное окружение для SadTalker (Python 3.8):
+
+*Следующие инструкции сгенерированы СhatGPT, не ручаюсь за них, однозначного способа установки именно python 3.8 в виртуальное окружение не могу предоставить*
+
+**Windows:**
+
+1. Скачайте Python 3.8 с официального сайта: [Python 3.8.20](https://www.python.org/downloads/release/python-3820/).
+2. Убедитесь, что во время установки Python 3.8 вы выбрали опцию "Add Python to PATH".
+3. Создайте виртуальное окружение с помощью Python 3.8:
+
+Откройте командную строку и выполните:
+
+```bash
+py -3.8 -m venv sadtalker-venv
+sadtalker-venv\Scripts\activate
+```
+
+**macOS / Linux:**
+
+1. Установите Python 3.8 с помощью Homebrew (для macOS) или используйте `apt` (для Linux).
+
+**Для macOS**:
+
+```bash
+brew install python@3.8
+```
+*Может не сработать, т.к brew считает версию 3.8 deprecated*
+
+**Для Linux (Ubuntu/Debian)**:
+
+```bash
+sudo apt update
+sudo apt install python3.8 python3.8-venv python3.8-dev
+```
+
+2. Создайте виртуальное окружение с помощью Python 3.8:
+
+В терминале выполните:
+
+```bash
+python3.8 -m venv sadtalker-venv
+source sadtalker-venv/bin/activate
+```
+
+### 6. Установите пакеты для SadTalker 
+
+В активированном виртуальном окружении установите все нужные модули для SadTalker:
+
+```bash
+pip install -r requirements_sad_talker.txt
+```
+
+Если ffmpeg еще не установлен, надо установить. Опять таки, точно не могу сказать как, можно попробовать ```pip install ffmpeg```.  
+Либо посмотрите в [SadTalker на GitHub](https://github.com/OpenTalker/SadTalker)
+
+___
+
+Помимо пакетов pip нужно установить файлы *checkpoints*, для этого:
+1. В ./Sadtalker создать папку ```checkpoints```
+2. Выполнить команду 
+```bash
+bash scripts/download_models.sh
+```
+
+В доке SadTalker эта команда рекомендуется для macos и linux. Можно скачать эти модули [здесь](https://github.com/OpenTalker/SadTalker?tab=readme-ov-file#2-download-models)
+вручную, поместить их в папку checkpoints
+
+Если папка ```gfpgan``` **отсутствует**, то её можно создать и закинуть туда папку weights из файлов которые надо скачать
+
+### 7. Настройка конфига
+
+В приложении в файле ```config.py``` находится конфиг. Там нужно указать путь до:
+
+- SAD_TALKER_PYTHON_PATH – файл python внутри виртуального окружения для sadtalker
+- SAD_TALKER_INFERENCE – файл inference.py
+- SAD_TALKER_DIR_PATH - путь до папки /SadTalker
+- LECTURES_TEXT_DELIMITER - разделитель по которому будет дробиться содержание файла с текстом лекции
+- LOGS_DIR_PATH - путь до папки для логов. Её можно в принципе не менять.
+
+Внутри ```config.py``` так же есть словарик relative_paths. Там можно указать относительный путь. Но относительные пути могут залагать при запуске.  
+В любом случае, относительные пути будут приводится к абсолютным. В датаклассе config в параметры записываются **только абсолютные пути**, можно указать сразу их (просто в виде строки)
+
+___
+
+# Методы приложения
+
+### /generate
+POST запрос, передается body с json, принимаются следующие параметры:
+
+
+
+  Метод для генерации запроса принимает данные, которые описаны в схеме `GenerateRequestSchema`. Эта схема определяет следующие поля:
+
+  - `face_path` (`str`): Путь к изображению лица для генерации.
+  - `voice_path` (`str`): Путь к аудиофайлу с голосом.
+  - `lecture_text_path` (`str`): Путь к текстовому файлу с лекцией.
+  - `generated_dir_path` (`str`): Путь к папке ```generated```
+  - `id` (`int`): Идентификатор генерации (файлы генерации содержат этот id). Он же id лекции.
+
+
+  Пример:
+  ```json
+  {
+    "face_path": "/path/to/face/image.jpg",
+    "voice_path": "/path/to/voice/audio.mp3",
+    "lecture_text_path": "/path/to/lecture/text.txt",
+    "generated_dir_path": "/path/to/generated/files/",
+    "id": 1
+  }
+  ```
+
+### /generate/cancel
+
+Отменяет генерацию.  
+Работает нестабильно. Не гарантирует отмену выполнения (может отменить не сразу, либо вообще не отменить)
+
+GET запрос без параметров
+
+
+## Ответы от приложения
+
+Все ответы (и ошибки) приходят практически в едином формате:
+
+**Response:**
+- ```error``` (```bool```) – Произошла ошибка или нет
+- ```message``` (```str```) – Сообщение
+- ```result``` - Ответ (если он есть, может не передаваться)
+
+
+### Подробнее про result
+
+1. В методе /generate:
+   - В случае успешного ответа отправляется список формата ```list[list[int]]```. Это список, который хранит списки - каждый из них является **слайдом** и хранит в себе номера фрагментов, которые ему принадлежат
+2. В методе /generate/cancel:
+   - True или False

@@ -1,0 +1,29 @@
+# Базовые Python-игноры
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.so
+.pytest_cache/
+
+# Виртуальные окружения (любые)
+.venv/
+venv/
+env/
+
+# Пользовательские папки/файлы
+SadTalker/
+src/logs/
+*.wav
+*.ogg
+*.mp4
+*.mp3
+
+# Конфиги и IDE
+.env
+.flaskenv
+.idea/
+.vscode/
+
+# Системные файлы
+.DS_Store
+Thumbs.db
