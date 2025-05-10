@@ -14,7 +14,6 @@ def create_app() -> Flask:
     app = Flask(__name__)
 
     tts_model = create_xtts_model()
-    # tts_model = None
     app.tts_model = tts_model
 
     sadtalker_model = SadTalker(
