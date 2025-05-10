@@ -19,7 +19,7 @@
 ### 1. Клонируйте репозиторий с GitHub:
 
   ```bash
-  git clone https://github.com/your-username/video-lecture.git
+  git clone https://github.com/ilyamlinarzh/videolecture.git
    ```
 
 ### 2. Создайте виртуальное окружение
@@ -126,9 +126,13 @@ source sadtalker-venv/bin/activate
 
 В активированном виртуальном окружении установите все нужные модули для SadTalker:
 
+
 ```bash
 pip install -r requirements_sad_talker.txt
 ```
+
+*Файл ```requirements_sad_talker.txt``` находится отдельно в корне, используем его если будут какие то проблемы. Можно попробовать сначала установить зависимости которые уже есть в скачанной моделе (```./SadTalker/req.txt``` и ```./SadTalker/requirements.txt```)*
+
 
 Если ffmpeg еще не установлен, надо установить. Опять таки, точно не могу сказать как, можно попробовать ```pip install ffmpeg```.  
 Либо посмотрите в [SadTalker на GitHub](https://github.com/OpenTalker/SadTalker)
