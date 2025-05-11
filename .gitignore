@@ -11,7 +11,7 @@ venv/
 env/
 
 # Пользовательские папки/файлы
-SadTalker/
+/SadTalker/
 src/logs/
 *.wav
 *.ogg
